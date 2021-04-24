@@ -1,31 +1,68 @@
-from models import Pessoas, db_session
+from models import Programador, Habilidades
 
-#Insere Dados na Tabela Pessoa
-def insere_pessoas():
-    pessoa = Pessoas(nome='Renato', idade=25)
+#Insere Dados na Tabela Programador
+def insere_programador():
+    pessoa = Programador(nome='Renato', idade=25, email='matue@hotmail.com')
     print(pessoa)
     pessoa.save()
 
-#Realiza consulta na Tabela Pessoa
-def consulta():
-    pessoa = Pessoas.query.all()
+#Realiza consulta na Tabela Programador
+def consulta_programador():
+    pessoa = Programador.query.all()
     print(pessoa)
-    pessoas = Pessoas.query.filter_by(nome='Cleber').first()
+    pessoas = Programador.query.filter_by(nome='Renato').first()
     print(pessoas.idade)
+    pessoase = Programador.query.filter_by(nome='Renato').first()
+    print(pessoase.email)
 
-#Altera dados na Tabela Pessoa
-def altera_pessoa():
-    pessoa = Pessoas.query.filter_by(nome='Cleber').first()
+#Altera dados na Tabela Programador
+def altera_programador():
+    pessoa = Programador.query.filter_by(nome='Renato').first()
     pessoa.idade = 29
     pessoa.save()
 
-#Exclui dados na Tabela Pessoa
-def exclui_pessoa():
-    pessoa = Pessoas.query.filter_by(nome='Cleber').first()
+#Exclui dados na Tabela Programador
+def exclui_programador():
+    pessoa = Programador.query.filter_by(nome='Renato').first()
     pessoa.delete()
 
+#Insere Dados na Tabela Habilidades
+def insere_habilidade():
+    hab = Habilidades(nome='C/C++')
+    print(hab)
+    hab.save()
+
+#Realiza consulta na Tabela Habilidades
+def consulta_habilidade():
+    lep = Habilidades.query.all()
+    print(lep)
+    hab = Habilidades.query.filter_by(nome='Python').first()
+    print(hab.nome)
+
+#Altera dados na Tabela Habilidades
+def altera_habilidade():
+    hab = Habilidades.query.filter_by(nome='C/C++').first()
+    hab.nome = 'Ruby'
+    hab.save()
+
+#Exclui dados na Tabela Habilidades
+def exclui_habilidade():
+    hab = Habilidades.query.filter_by(nome='Ruby').first()
+    hab.delete()
+
+#Consulta o Programador, sua Idade e sua Habilidade
+def consulta():
+    hab = Habilidades.query.filter_by(nome='C/C++').first()
+    pessoa = Programador.query.filter_by(nome='Renato').first()
+    print(pessoa.nome, pessoa.idade, hab.nome)
+
 if __name__ == '__main__':
-    #insere_pessoas()
-    #altera_pessoa()
-    exclui_pessoa()
+    insere_programador()
+    exclui_programador()
+    altera_programador()
+    consulta_programador()
+    insere_habilidade()
+    altera_habilidade()
+    exclui_habilidade()
+    consulta_habilidade()
     consulta()
