@@ -16,9 +16,7 @@ class Programador(Base):
     email = Column(String)
 
     def __repr__(self):
-        return'<Programador {},' \
-              'Idade {},' \
-              'Email {}>'.format(self.nome, self.idade, self.email)
+        return'<Programador {}>'.format(self.nome, self.idade, self.email)
 
     def save(self):
         db_session.add(self)
@@ -28,7 +26,7 @@ class Programador(Base):
         db_session.commit()
 
 class Habilidades(Base):
-    __tablename__ = 'Habilidades'
+    __tablename__ = 'habilidades'
     id = Column(Integer, primary_key=True)
     nome = Column(String(40), index=True)
     def __repr__(self):
@@ -41,13 +39,23 @@ class Habilidades(Base):
         db_session.delete(self)
         db_session.commit()
 
-class programador_habilidade(Base):
-    __tablename__='programador_habilidade'
+class ProgHab(Base):
+    __tablename__ = 'proghab'
     id = Column(Integer, primary_key=True)
-    programador_id = Column(String(80), ForeignKey('programador.id'))
+    habilidades_id = Column(Integer, ForeignKey('habilidades.id'))
+    habilidades = relationship("Habilidades")
+    programador_id = Column(Integer, ForeignKey('programador.id'))
     programador = relationship("Programador")
-    habilidade_id = Column(String(80), ForeignKey('Habilidades.id'))
-    habilidade = relationship("Habilidades")
+    def __repr__(self):
+        return'{}, {}'.format(self.programador, self.habilidades)
+
+    def save(self):
+        db_session.add(self)
+        db_session.commit()
+
+    def delete(self):
+        db_session.delete(self)
+        db_session.commit()
 
 def init_db():
     Base.metadata.create_all(bind=engine)
